@@ -5,7 +5,8 @@
   "main": "./src/main/index.js",
   "scripts": {
     "start:main": "electron ./src/main/index",
-    "start:render": "APP_ROOT=src/renderer BROWSER=none umi dev"
+    "start:render": "APP_ROOT=src/renderer BROWSER=none umi dev",
+    "build:render": "APP_ROOT=src/renderer umi build"
   },
   "author": "",
   "license": "ISC",

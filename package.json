@@ -1,0 +1,17 @@
+{
+  "name": "my-electron",
+  "version": "1.0.0",
+  "description": "开发环境依赖package",
+  "main": "./src/main/index.js",
+  "scripts": {
+    "start:main": "electron ./src/main/index",
+    "start:render": "APP_ROOT=src/renderer BROWSER=none umi dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "umi": "^2.8.11",
+    "umi-plugin-dva": "^1.7.4",
+    "umi-plugin-react": "^1.9.10"
+  }
+}

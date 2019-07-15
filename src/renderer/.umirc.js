@@ -1,4 +1,7 @@
 export default {
+  outputPath: '../../app/dist/renderer',
+  publicPath: './',
+  history: 'hash',
   plugins: [
     [
       'umi-plugin-react',
@@ -6,7 +9,6 @@ export default {
         dva: {
           immer: true
         },
-        library: 'react',
         dynamicImport: false,
         title: 'umi-electron'
       }

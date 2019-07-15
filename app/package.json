@@ -1,11 +1,12 @@
 {
   "name": "desktop-app",
   "version": "1.0.0",
-  "description": "electron桌面应用",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+  "description": "网易云音乐",
+  "main": "dist/main/main.js",
+  "author": "lijie-hj@huajiao.tv",
+  "license": "ISC",
+  "dependencies": {
+    "electron-is": "^3.0.0",
+    "electron-log": "^3.0.6"
+  }
 }

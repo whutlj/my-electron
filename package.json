@@ -3,16 +3,45 @@
   "version": "1.0.0",
   "description": "开发环境依赖package",
   "main": "./src/main/index.js",
+  "build": {
+    "productName": "花音直播",
+    "files": [
+      "./dist/**/*",
+      "./pages/**/*",
+      "./node_modules/**/*"
+    ],
+    "appId": "com.sorrycc.umi-example-electron",
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "asar": false,
+    "mac": {
+      "identity": null
+    }
+  },
   "scripts": {
     "start:main": "electron ./src/main/index",
-    "start:render": "APP_ROOT=src/renderer BROWSER=none umi dev",
-    "build:render": "APP_ROOT=src/renderer umi build"
+    "start:render": "APP_ROOT=src/renderer BROWSER=none ESLINT=none umi dev",
+    "build:render": "APP_ROOT=src/renderer ESLINT=none umi build",
+    "build:main": "webpack",
+    "build": "yarn build:render && yarn build:main",
+    "start": "electron ./app/dist/main/main.js",
+    "rebuild": "electron-rebuild -m ./app",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-builder": "^21.0.15",
+    "electron-is": "^3.0.0",
+    "electron-log": "^3.0.6",
+    "electron-rebuild": "^1.8.5",
     "umi": "^2.8.11",
     "umi-plugin-dva": "^1.7.4",
-    "umi-plugin-react": "^1.9.10"
+    "umi-plugin-react": "^1.9.10",
+    "webpack-cli": "^3.3.6"
   }
 }

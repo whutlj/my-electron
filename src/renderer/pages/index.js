@@ -6,7 +6,7 @@ import { connect } from 'dva';
 }))
 class App extends React.Component {
   render() {
-    return <div>主页</div>;
+    return <div>幻音</div>;
   }
 }
 

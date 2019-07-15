@@ -1,11 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 const { join } = require('path');
+const is = require('electron-is');
+const log = require('electron-log');
 
 // 全局窗口
 let globalWin;
 app.on('ready', appReady);
 app.on('window-all-closed', () => {
-  console.log(process.platform);
+  log.info('用户平台', process.platform);
   if (process.platform !== 'darwin') {
     // macOS
     app.quit();
@@ -13,6 +15,7 @@ app.on('window-all-closed', () => {
 });
 app.on('activate', () => {
   if (globalWin === null) {
+    log.info('mac从程序坞激活');
     appReady();
   }
 });
@@ -22,10 +25,15 @@ function appReady() {
     width: 960,
     height: 480
   });
-  const filePath = join(__dirname, '..', 'renderer');
   // 加载页面
-  globalWin.loadFile(`${filePath}/index.html`);
-  // 打开开发者工具
+  if (is.dev()) {
+    globalWin.loadURL('http://localhost:8000');
+    log.info('本地加载');
+  } else {
+    const filePath = join($dirname, '..', 'renderer');
+    log.info(`file://${filePath}/index.html`);
+    globalWin.loadURL(`file://${filePath}/index.html`);
+  }
   globalWin.webContents.openDevTools();
 
   globalWin.on('close', () => {

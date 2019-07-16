@@ -57,9 +57,3 @@ $ npm run pack:dirOnly
 * /src/main -> /app/dist/main，是基于 roadhog 打包
 * /src/renderer -> /app/dist/renderer，是基于 umi 做打包，打包的history要配置成hash，默认的browser需要服务端配置比如，配置nginx启动等
 * /webpack.config.js 等 roadhog 支持 APP_ROOT 环境变量之后会迁到 /src/main 下
-
-## FAQ
-
-### 如何在 renderer 端引用 electron、node 原生模块、以及 app 里的依赖？
-
-直接 import 就好，已处理好 externals。

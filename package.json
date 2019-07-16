@@ -39,6 +39,7 @@
     "electron-is": "^3.0.0",
     "electron-log": "^3.0.6",
     "electron-rebuild": "^1.8.5",
+    "slash": "^3.0.0",
     "umi": "^2.8.11",
     "umi-plugin-dva": "^1.7.4",
     "umi-plugin-react": "^1.9.10",

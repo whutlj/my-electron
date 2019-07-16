@@ -12,13 +12,13 @@ const routes = [
     "path": "/",
     "exact": true,
     "component": require('../index.js').default,
-    "_title": "umi-electron",
-    "_title_default": "umi-electron"
+    "_title": "花音直播",
+    "_title_default": "花音直播"
   },
   {
     "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false }),
-    "_title": "umi-electron",
-    "_title_default": "umi-electron"
+    "_title": "花音直播",
+    "_title_default": "花音直播"
   }
 ];
 window.g_routes = routes;

@@ -4,7 +4,6 @@ node_modules
 release
 .idea
 .history
-.vscode
 .yarn-error.log
 .gitlab-ci.yml
 package-lock.json

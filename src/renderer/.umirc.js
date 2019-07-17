@@ -26,6 +26,7 @@ export default {
     '@': resolvePath(''),
     '@css': resolvePath('assets/css'),
     '@img': resolvePath('assets/img'),
+    '@js': resolvePath('assets/js'),
     '@utils': resolvePath('utils')
   },
   // externals(context, request, callback) {

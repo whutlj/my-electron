@@ -1,7 +1,7 @@
 const is = require('electron-is');
 const { Tray, Menu } = require('electron');
 const App = require('../index.js');
-
+const { join } = require('path');
 class TaryHandle {
   constructors(props) {
     this.trayIcon = '';
@@ -10,7 +10,7 @@ class TaryHandle {
   initTary() {
     if (this.tray) return;
     if (is.dev()) {
-      this.trayIcon = '/Users/lijie/Documents/workspace/study/my-electron/src/main/img/tray-icon.png';
+      this.trayIcon = '/Users/lijie/Documents/workspace/study/my-electron/src/main/static/img/tray-icon.png';
     } else {
       this.trayIcon = join($dirname, './img/tray-icon.png');
     }

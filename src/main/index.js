@@ -27,6 +27,7 @@ function appReady() {
   globalWin = new BrowserWindow({
     width: 960,
     height: 480,
+    useContentSize: true,
     webPreferences: {
       nodeIntegration: true
     }

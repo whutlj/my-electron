@@ -19,11 +19,6 @@ class App extends React.Component {
     name: 'lj',
     inputValue: ''
   };
-  componentWillMount() {
-    ipcRenderer.on('async-one', (event, arg) => {
-      console.log(arg);
-    });
-  }
   haha() {
     // 这是对象原型上的属性
     console.log('dd');
@@ -84,10 +79,10 @@ class App extends React.Component {
           发送异步消息
         </div>
         <div onClick={this.showDialog.bind(this, 'open')} className={styles.btn}>
-          显示open对话框
+          选取要保存的文件
         </div>
         <div onClick={this.showDialog.bind(this, 'save')} className={styles.btn}>
-          显示save对话框
+          保存文件
         </div>
         <div className={styles.btn} onClick={this.clipInput}>
           复制输入内容

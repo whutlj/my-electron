@@ -12,9 +12,9 @@ class EventHandle {
       event.returnValue = 'main回复sync-one';
       log.info('main收到sync-one消息', arg);
     });
-    ipcMain.on('uploadFile', (event, arg) => {
+    ipcMain.on('showDialog', (event, arg) => {
       const { type } = arg;
-      if (type === 'user') {
+      if (type === 'open') {
         dialog.showOpenDialog({ properties: ['openFile'], filters: [{ name: 'TXT', extensions: ['txt'] }] }, filePaths => {
           if (filePaths) {
             fs.readFile(filePaths[0], 'utf-8', (err, content) => {
@@ -22,6 +22,13 @@ class EventHandle {
             });
           }
         });
+      }
+      if (type === 'save') {
+        dialog.showSaveDialog({properties: ['openFile'], filters: [{ name: 'TXT', extensions: ['txt'] }]}, filename => {
+          if (filename) {
+            console.log(filename);
+          }
+        })
       }
     });
   }

@@ -66,8 +66,8 @@ class App extends React.Component {
     message.success('复制成功');
   };
 
-  showDialog = () => {
-    ipcRenderer.send('uploadFile', {type: 'user'});
+  showDialog = (type) => {
+    ipcRenderer.send('showDialog', {type});
   };
   render() {
     const { inputValue } = this.state;
@@ -83,8 +83,11 @@ class App extends React.Component {
         <div onClick={this.sendAsyncMsg} className={styles.btn}>
           发送异步消息
         </div>
-        <div onClick={this.showDialog} className={styles.btn}>
-          显示对话框
+        <div onClick={this.showDialog.bind(this, 'open')} className={styles.btn}>
+          显示open对话框
+        </div>
+        <div onClick={this.showDialog.bind(this, 'save')} className={styles.btn}>
+          显示save对话框
         </div>
         <div className={styles.btn} onClick={this.clipInput}>
           复制输入内容

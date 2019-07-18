@@ -9,6 +9,13 @@ const Router = require('dva/router').routerRedux.ConnectedRouter;
 
 const routes = [
   {
+    "path": "/drag",
+    "exact": true,
+    "component": require('../drag/index.js').default,
+    "_title": "花音直播",
+    "_title_default": "花音直播"
+  },
+  {
     "path": "/",
     "exact": true,
     "component": require('../index.js').default,

@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './index.css';
-import iconPath from '@img/icon.png';
 import { isSupport } from '@utils';
 import { ipcRenderer, clipboard } from 'electron';
 import { message } from 'antd';
-import { remote } from 'electron';
+import router from 'umi/router';
 
-const { dialog } = remote;
 @connect(({ app }) => ({
   g: app.g
 }))
@@ -64,6 +62,12 @@ class App extends React.Component {
   showDialog = (type) => {
     ipcRenderer.send('showDialog', {type});
   };
+  linkTo = () => {
+    router.push({
+      pathname: '/drag'
+    })
+  }
+
   render() {
     const { inputValue } = this.state;
     return (
@@ -87,6 +91,7 @@ class App extends React.Component {
         <div className={styles.btn} onClick={this.clipInput}>
           复制输入内容
         </div>
+        <div className={styles.btn} onClick={this.linkTo}>跳转页面</div>
       </div>
     );
   }

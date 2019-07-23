@@ -12,7 +12,7 @@ class TaryHandle {
     if (is.dev()) {
       this.trayIcon = '/Users/lijie/Documents/workspace/study/my-electron/src/main/static/img/tray-icon.png';
     } else {
-      this.trayIcon = join($dirname, './img/tray-icon.png');
+      this.trayIcon = join($dirname, './static/img/tray-icon.png');
     }
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('花音直播');

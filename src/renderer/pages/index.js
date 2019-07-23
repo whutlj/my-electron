@@ -64,7 +64,7 @@ class App extends React.Component {
   };
   linkTo = () => {
     router.push({
-      pathname: '/drag'
+      pathname: '/home'
     })
   }
 

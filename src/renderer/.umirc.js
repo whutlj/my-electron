@@ -54,7 +54,8 @@ export default {
   },
   chainWebpack(config, { webpack }) {
     config.set('target', 'electron-renderer');
-  }
+  },
+  autoprefixer: false
 
   // manifest: {
   //   basePath: '/'

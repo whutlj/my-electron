@@ -97,7 +97,7 @@ s {
 input {
   outline: none;
 }
-.logo {
+.logo, .log-b {
   background: url(./assets/img/topbar.png) no-repeat 0 9999px;
 }
 .m-top {
@@ -149,4 +149,50 @@ input {
   clear: both;
   height: 0;
   visibility: hidden;
+}
+
+.log-b {
+  float: right;
+  margin: 19px 0 0 20px;
+  height: 45px;
+  font-size: 12px;
+  position: relative;
+  background-position: right -47px;
+  cursor: pointer;
+  .btn-n {
+    display: block;
+    margin-top: 7px;
+    padding-right: 20px;
+    color: #787878;
+  }
+  &:hover {
+    .log-list {
+      display: block;
+    }
+  }
+  .log-list {
+    position: absolute;
+    top: 38px;
+    right: -43px;
+    width: 158px;
+    background: #2b2b2b;
+    border: 1px solid #202020;
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.50);
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    display: none;
+    .ltb {
+      border: 1px solid #232323;
+      border-width: 1px 0;
+    }
+    .log-w {
+      height: 38px;
+      line-height: 39px;
+      color: #cccccc;
+      padding-left: 39px;
+      &:hover {
+        color: #ffffff;
+      }
+    }
+  }
 }

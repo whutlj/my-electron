@@ -19,6 +19,19 @@ class Head extends React.PureComponent {
               </li>
             ))}
           </ul>
+          <div className="log-b">
+            <div className="btn-n">登录</div>
+            <div className="log-list">
+              <ul>
+                <li>
+                  <div className="log-w">手机号登录</div>
+                </li>
+                <li className="ltb">
+                  <div className="log-w">邮箱登录</div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );

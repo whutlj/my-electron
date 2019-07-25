@@ -5,13 +5,12 @@ import Link from 'umi/link';
 class YyHome extends React.Component {
   async componentWillMount() {
     const res = await hotList();
-    console.log(res);
   }
 
   render() {
-    return <div>音乐首页
-      <Link to="/">首页</Link>
-    </div>;
+    return (
+      <div>首页</div>
+    );
   }
 }
 

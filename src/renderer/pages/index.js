@@ -6,9 +6,6 @@ import { ipcRenderer, clipboard } from 'electron';
 import { message } from 'antd';
 import router from 'umi/router';
 
-@connect(({ app }) => ({
-  g: app.g
-}))
 class App extends React.Component {
   constructor(props) {
     super(props);

@@ -25,8 +25,8 @@ app.on('activate', () => {
 function appReady() {
   trayInstance.initTary();
   globalWin = new BrowserWindow({
-    width: 960,
-    height: 480,
+    width: 1400,
+    height: 960,
     useContentSize: true,
     webPreferences: {
       nodeIntegration: true

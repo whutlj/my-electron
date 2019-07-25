@@ -9,23 +9,43 @@ const Router = require('dva/router').routerRedux.ConnectedRouter;
 
 const routes = [
   {
-    "path": "/drag",
-    "exact": true,
-    "component": require('../drag/index.js').default,
-    "_title": "花音直播",
-    "_title_default": "花音直播"
-  },
-  {
-    "path": "/home",
-    "exact": true,
-    "component": require('../home/index.js').default,
-    "_title": "花音直播",
-    "_title_default": "花音直播"
-  },
-  {
     "path": "/",
-    "exact": true,
-    "component": require('../index.js').default,
+    "component": require('../../layouts/index.js').default,
+    "routes": [
+      {
+        "path": "/drag",
+        "exact": true,
+        "component": require('../drag/index.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
+        "path": "/home",
+        "exact": true,
+        "component": require('../home/index.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
+        "path": "/",
+        "exact": true,
+        "component": require('../index.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
+        "path": "/me",
+        "exact": true,
+        "component": require('../me/index.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
+        "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false }),
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      }
+    ],
     "_title": "花音直播",
     "_title_default": "花音直播"
   },

@@ -43,6 +43,13 @@ export default {
       const requireAbsolute = `require('${orininalPath}')`;
       isExternal = isDev ? requireAbsolute : `require('${request}')`;
     }
+    // const CDNJs = ['immutable'];
+    // const CDNMap = {
+    //   immutable: 'Immutable'
+    // };
+    // if (CDNJs.includes(request)) {
+    //   isExternal = CDNMap[request];
+    // }
     callback(null, isExternal);
   },
   chainWebpack(config, { webpack }) {

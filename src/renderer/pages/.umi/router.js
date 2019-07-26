@@ -34,9 +34,9 @@ const routes = [
         "_title_default": "花音直播"
       },
       {
-        "path": "/me",
+        "path": "/playlist",
         "exact": true,
-        "component": require('../me/index.js').default,
+        "component": require('../playlist/index.js').default,
         "_title": "花音直播",
         "_title_default": "花音直播"
       },

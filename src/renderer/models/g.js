@@ -3,17 +3,17 @@ const { fromJS } = require('immutable');
 const defaultState = fromJS({
   tabs: [
     {
-      label: '发现音乐',
+      label: '个性推荐',
       id: 'find',
       pathname: '/home'
     },
     {
-      label: '我的音乐',
-      id: 'me',
-      pathname: '/me'
+      label: '歌单',
+      id: 'playlist',
+      pathname: '/playlist'
     },
     {
-      label: '测试其他功能',
+      label: '主播电台',
       id: 'other',
       pathname: '/'
     }

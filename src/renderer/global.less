@@ -159,11 +159,25 @@ input {
   position: relative;
   background-position: right -47px;
   cursor: pointer;
+  &.log-avatar {
+    padding-right: 20px;
+  }
   .btn-n {
     display: block;
     margin-top: 7px;
     padding-right: 20px;
     color: #787878;
+  }
+  .user-avatar {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    padding-right: 20px;
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+    }
   }
   &:hover {
     .log-list {
@@ -195,4 +209,34 @@ input {
       }
     }
   }
+}
+
+.ant-modal-header {
+  border-radius: 3px 3px 0 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #2d2d2d;
+}
+.ant-modal-body {
+  padding: 0;
+}
+.ant-modal-title {
+  color: #ffffff;
+  font-size: 12px;
+}
+.ant-modal-footer {
+  border-radius: 0 0 3px 3px;
+  border-top: none;
+}
+.ant-modal-close-x {
+  height: 39px;
+  width: 39px;
+  line-height: 39px;
+}
+.ant-input:focus {
+  border-color: #d9d9d9;
+  box-shadow: none;
+}
+.ant-input:hover {
+  border-color: #d9d9d9;
 }

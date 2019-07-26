@@ -21,6 +21,7 @@ export function _onCreate() {
   });
   app.use(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/dva-immer/dist/index.js')());
   app.model({ namespace: 'g', ...(require('/Users/lijie/Documents/workspace/study/my-electron/src/renderer/models/g.js').default) });
+app.model({ namespace: 'user', ...(require('/Users/lijie/Documents/workspace/study/my-electron/src/renderer/models/user.js').default) });
   return app;
 }
 

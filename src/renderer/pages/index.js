@@ -64,7 +64,13 @@ class App extends React.Component {
       pathname: '/home'
     })
   }
-
+  childClick = (event) => {
+    event.stopPropagation();
+    console.log('子元素点击', event);
+  }
+  parentClick = (e) => {
+    console.log('父元素点击');
+  }
   render() {
     const { inputValue } = this.state;
     return (
@@ -89,6 +95,12 @@ class App extends React.Component {
           复制输入内容
         </div>
         <div className={styles.btn} onClick={this.linkTo}>跳转页面</div>
+        <div onClick={this.parentClick}>
+          父元素
+          <div onClick={this.childClick}>
+            子元素
+          </div>
+        </div>
       </div>
     );
   }

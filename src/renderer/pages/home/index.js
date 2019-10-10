@@ -14,6 +14,7 @@ function Home() {
 
   useEffect(() => {
     console.log('第二个副作用');
+    console.log('第二次修改');
   }, [name]);
   function changeName() {
     setName(`${Math.random()}`);

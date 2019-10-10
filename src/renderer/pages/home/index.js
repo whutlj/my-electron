@@ -9,10 +9,13 @@ function Home() {
     console.log('useEffect调用');
     return () => {
       console.log('副作用清理');
+<<<<<<< HEAD
       console.log('master超前一');
       console.log('master超前二');
       console.log('第二');
       console.log('第三');
+=======
+>>>>>>> origin/feature1
     };
   }, [count]);
 

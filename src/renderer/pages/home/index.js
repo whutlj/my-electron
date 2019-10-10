@@ -11,6 +11,7 @@ function Home() {
       console.log('副作用清理');
       console.log('master超前一');
       console.log('master超前二');
+      console.log('第二');
     };
   }, [count]);
 

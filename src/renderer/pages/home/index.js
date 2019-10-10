@@ -14,16 +14,9 @@ function Home() {
 
   useEffect(() => {
     console.log('第二个副作用');
-    console.log('分支1修改内容');
-    console.log('分支2测试rebase');
-
-    console.log('11111')
-    console.log('分支1测试rebase');
   }, [name]);
   function changeName() {
-    console.log('feature2修改home index');
     setName(`${Math.random()}`);
-    console.log('分支1测试rebase');
   }
   return (
     <div>

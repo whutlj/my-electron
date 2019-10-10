@@ -9,8 +9,6 @@ function Home() {
     console.log('useEffect调用');
     return () => {
       console.log('副作用清理');
-      console.log('master超前一');
-      console.log('master超前二');
     };
   }, [count]);
 

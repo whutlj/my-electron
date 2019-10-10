@@ -10,6 +10,7 @@ function Home() {
     return () => {
       console.log('副作用清理');
       console.log('master超前一');
+      console.log('master超前二');
     };
   }, [count]);
 

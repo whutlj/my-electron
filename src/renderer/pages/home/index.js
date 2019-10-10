@@ -14,8 +14,10 @@ function Home() {
 
   useEffect(() => {
     console.log('第二个副作用');
+
   }, [name]);
   function changeName() {
+    console.log('feature2修改home index');
     setName(`${Math.random()}`);
   }
   return (

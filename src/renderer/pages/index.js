@@ -5,6 +5,7 @@ import { isSupport } from '@utils';
 import { ipcRenderer, clipboard } from 'electron';
 import { message } from 'antd';
 import router from 'umi/router';
+import ChildCom from '@/components/Childe';
 
 class App extends React.Component {
   constructor(props) {
@@ -56,29 +57,40 @@ class App extends React.Component {
     message.success('复制成功');
   };
 
-  showDialog = (type) => {
-    ipcRenderer.send('showDialog', {type});
+  showDialog = type => {
+    ipcRenderer.send('showDialog', { type });
   };
   linkTo = () => {
     router.push({
       pathname: '/home'
-    })
-  }
-  childClick = (event) => {
+    });
+  };
+  childClick = event => {
     event.stopPropagation();
     console.log('子元素点击', event);
-  }
-  parentClick = (e) => {
+  };
+  parentClick = e => {
     console.log('父元素点击');
-  }
+  };
+
+  setName = () => {
+    this.setState({
+      name: 'new name'
+    });
+  };
   render() {
     const { inputValue } = this.state;
+    console.log('父组建render');
     return (
       <div>
         <input type="text" className={styles.textInput} onChange={this.handleChange} value={inputValue} />
+        <div className="" onClick={this.setName}>
+          设置名字
+        </div>
         <div className={styles.btn} onClick={this.noticeInfo}>
           按钮
         </div>
+        <ChildCom></ChildCom>
         <div onClick={this.sendSyncMsg} className={styles.btn}>
           发送同步消息
         </div>
@@ -94,12 +106,12 @@ class App extends React.Component {
         <div className={styles.btn} onClick={this.clipInput}>
           复制输入内容
         </div>
-        <div className={styles.btn} onClick={this.linkTo}>跳转页面</div>
+        <div className={styles.btn} onClick={this.linkTo}>
+          跳转页面
+        </div>
         <div onClick={this.parentClick}>
           父元素
-          <div onClick={this.childClick}>
-            子元素
-          </div>
+          <div onClick={this.childClick}>子元素</div>
         </div>
       </div>
     );

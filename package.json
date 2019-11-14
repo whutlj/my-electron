@@ -20,7 +20,10 @@
       "identity": null
     },
     "win": {
-      "target": ["nsis","zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     }
   },
   "scripts": {
@@ -54,6 +57,7 @@
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
-    "immutable": "^4.0.0-rc.12"
+    "immutable": "^4.0.0-rc.12",
+    "swiper": "^5.2.0"
   }
 }

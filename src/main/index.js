@@ -38,7 +38,7 @@ function appReady() {
   });
   // 加载页面
   if (is.dev()) {
-    const promise = globalWin.loadURL('http://localhost:8000');
+    globalWin.loadURL('http://localhost:8000');
     log.info('本地加载', 'http://localhost:8000');
     // globalWin.setProgressBar(0.5)
   } else {

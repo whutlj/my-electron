@@ -55,6 +55,7 @@ class LoginModal extends React.PureComponent {
         payload: false
       });
     } catch (err) {
+      console.log(err)
       this.setState({
         errMsg: '用户名或密码错误'
       });

@@ -12,7 +12,6 @@ module.exports = {
   },
   target: 'electron-main',
   externals: (context, request, callback) => {
-    console.log(request);
     callback(null, request.charAt(0) === '.' ? false : `require("${request}")`);
   },
   module: {
@@ -32,7 +31,16 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyStaticPlugin(path.resolve(__dirname, './src/main/static'), path.resolve(__dirname, './app/dist/main/static')),
+    new CopyStaticPlugin([
+      {
+        from: path.resolve(__dirname, './src/main/static'),
+        to: path.resolve(__dirname, './app/dist/main/static')
+      },
+      {
+        from: path.resolve(__dirname, './src/main/preload'),
+        to: path.resolve(__dirname, './app/dist/main/preload')
+      }
+    ]),
     new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       $dirname: '__dirname'

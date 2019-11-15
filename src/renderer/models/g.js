@@ -1,5 +1,4 @@
-const { fromJS } = require('immutable');
-
+import { fromJS } from 'immutable';
 const defaultState = fromJS({
   tabs: [
     {

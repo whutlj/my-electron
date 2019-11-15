@@ -1,5 +1,6 @@
 const is = require('electron-is');
-const { Tray, Menu } = require('electron');
+const { Tray, Menu, app } = require('electron');
+const log = require('electron-log');
 const App = require('../index.js');
 const { join } = require('path');
 class TaryHandle {
@@ -9,11 +10,12 @@ class TaryHandle {
   }
   initTary() {
     if (this.tray) return;
-    if (is.dev()) {
-      this.trayIcon = '/Users/lijie/Documents/workspace/study/my-electron/src/main/static/img/tray-icon.png';
-    } else {
-      this.trayIcon = join($dirname, './static/img/tray-icon.png');
-    }
+    // if (is.dev()) {
+    //   this.trayIcon = '/Users/lijie/Documents/workspace/study/my-electron/src/main/static/img/tray-icon.png';
+    // } else {
+    //   this.trayIcon = join($dirname, './static/img/tray-icon.png');
+    // }
+    this.trayIcon = `${app.getAppPath('exe')}/static/img/tray-icon.png`
     this.tray = new Tray(this.trayIcon);
     this.tray.setToolTip('花音直播');
     // const contextMenu = Menu.buildFromTemplate([{ label: 'Item1', type: 'radio' }, { label: 'Item2', type: 'radio' }]);
@@ -32,7 +34,7 @@ class TaryHandle {
 
   setHighlightMode(val) {
     if (this.tray) {
-      this.tray.setHighlightMode(val)
+      // this.tray.setHighlightMode(val);
     }
   }
 }

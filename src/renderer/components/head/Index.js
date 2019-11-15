@@ -12,6 +12,8 @@ class Head extends React.PureComponent {
   };
   render() {
     const { user, tabs, pathname } = this.props;
+    const loginType = user.get('loginType');
+    const avatarUrl = user.getIn(['profile', 'avatarUrl']);
     return (
       <div className="m-top">
         <div className="wrap f-cb">
@@ -27,11 +29,11 @@ class Head extends React.PureComponent {
               </li>
             ))}
           </ul>
-          <div className={classnames('log-b', { 'log-avatar': user.loginType === 1 })}>
-            {user.loginType === 1 ? (
+          <div className={classnames('log-b', { 'log-avatar': loginType === 1 })}>
+            {loginType === 1 ? (
               <React.Fragment>
                 <div className="user-avatar">
-                  <img src={user.profile.avatarUrl} alt="" />
+                  <img src={avatarUrl} alt="" />
                 </div>
                 <div className="log-list">
                   <ul>

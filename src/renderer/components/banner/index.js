@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
 import { get, post } from '@api/fetch.js';
+import { cacheImageFactory } from '@/utils';
 import Swiper from 'swiper';
 import styles from './index.less';
 
+const preloadImg = cacheImageFactory();
 @connect()
 class BannerComponent extends React.PureComponent {
   state = {
@@ -21,6 +23,7 @@ class BannerComponent extends React.PureComponent {
         type: 0 // 0 pc端
       };
       const { banners = [] } = await get('/banner', params);
+      preloadImg(banners, { key: 'imageUrl', addPath: '?imageView&blur=40x20' });
       this.setState(
         {
           banners

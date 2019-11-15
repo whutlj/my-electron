@@ -36,19 +36,22 @@
     "rebuild": "electron-rebuild -m ./app",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "dist:win": "electron-builder --win --x64"
+    "dist:win": "electron-builder --win --x64",
+    "test": "umi test",
+    "inspect": "umi inspect"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
-    "electron": "^5.0.6",
+    "electron": "^7.1.1",
     "electron-builder": "^21.0.15",
     "electron-is": "^3.0.0",
     "electron-log": "^3.0.6",
     "electron-rebuild": "^1.8.5",
     "file-loader": "^4.0.0",
+    "jest": "^24.9.0",
     "qs": "^6.7.0",
     "slash": "^3.0.0",
     "umi": "^2.8.11",
@@ -58,6 +61,7 @@
   },
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
+    "js-cookie": "^2.2.1",
     "swiper": "^5.2.0"
   }
 }

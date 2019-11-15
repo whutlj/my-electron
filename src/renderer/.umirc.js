@@ -1,5 +1,4 @@
-import slash from 'slash';
-const path = require('path');
+import path from 'path';
 
 function resolvePath(dir) {
   return path.resolve(__dirname, './', dir);
@@ -30,33 +29,46 @@ export default {
     '@utils': resolvePath('utils'),
     '@api': resolvePath('api')
   },
-  externals(context, request, callback) {
-    const isDev = process.env.NODE_ENV === 'development';
-    let isExternal = false;
-    const load = ['electron', 'fs', 'path', 'os', 'child_process'];
-    if (load.includes(request)) {
-      isExternal = `require('${request}')`;
-    }
-    const appDeps = Object.keys(require('../../app/package').dependencies);
-    if (appDeps.includes(request)) {
-      const orininalPath = slash(path.join(__dirname, '../../app/node_modules', request));
-      const requireAbsolute = `require('${orininalPath}')`;
-      isExternal = isDev ? requireAbsolute : `require('${request}')`;
-    }
-    // const CDNJs = ['immutable'];
-    // const CDNMap = {
-    //   immutable: 'Immutable'
-    // };
-    // if (CDNJs.includes(request)) {
-    //   isExternal = CDNMap[request];
-    // }
-    callback(null, isExternal);
-  },
+  // externals(context, request, callback) {
+  //   const isDev = process.env.NODE_ENV === 'development';
+  //   let isExternal = false;
+  //   const load = ['electron', 'fs', 'path', 'os', 'child_process'];
+  //   if (load.includes(request)) {
+  //     isExternal = `require('${request}')`;
+  //   }
+  //   const appDeps = Object.keys(require('../../app/package').dependencies);
+  //   if (appDeps.includes(request)) {
+  //     const orininalPath = slash(path.join(__dirname, '../../app/node_modules', request));
+  //     const requireAbsolute = `require('${orininalPath}')`;
+  //     isExternal = isDev ? requireAbsolute : `require('${request}')`;
+  //   }
+  //   const CDNJs = ['immutable'];
+  //   const CDNMap = {
+  //     immutable: 'Immutable'
+  //   };
+  //   if (CDNJs.includes(request)) {
+  //     isExternal = CDNMap[request];
+  //   }
+  //   callback(null, isExternal);
+  // },
   chainWebpack(config, { webpack }) {
-    config.set('target', 'electron-renderer');
+    // config.node.set('fs', false);
+    // node: {
+    //   setImmediate: false,
+    //   process: 'mock',
+    //   dgram: 'empty',
+    //   fs: 'empty',
+    //   net: 'empty',
+    //   tls: 'empty',
+    //   child_process: 'empty'
+    // }
+    config.devServer.set('host', 'wyy.localhost.com').set('port', 8000);
+  },
+  devServer: {
+    host: 'wyy.localhost.com',
+    port: 8000
   },
   autoprefixer: false
-
   // manifest: {
   //   basePath: '/'
   // }

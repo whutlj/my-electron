@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import { notification } from 'antd';
 class RenderEvent {
   initEvent() {

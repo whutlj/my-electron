@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './index.css';
 import { isSupport } from '@utils';
-import { ipcRenderer, clipboard } from 'electron';
 import { message } from 'antd';
 import router from 'umi/router';
-import ChildCom from '@/components/Childe';
+// import ChildCom from '@/components/Childe';
 
 class App extends React.Component {
   constructor(props) {
@@ -90,7 +89,7 @@ class App extends React.Component {
         <div className={styles.btn} onClick={this.noticeInfo}>
           按钮
         </div>
-        <ChildCom></ChildCom>
+        {/* <ChildCom></ChildCom> */}
         <div onClick={this.sendSyncMsg} className={styles.btn}>
           发送同步消息
         </div>

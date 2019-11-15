@@ -8,6 +8,9 @@ class Home extends React.PureComponent {
     return (
       <div className="recommend-wrapper">
         <Banner></Banner>
+        <div className="p-box">
+
+        </div>
       </div>
     );
   }

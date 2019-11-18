@@ -3,6 +3,15 @@ import Link from 'umi/link';
 import classnames from 'classnames';
 
 class Head extends React.PureComponent {
+  componentDidMount() {
+    this.init();
+  }
+  init = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/fetchLoginStatus'
+    });
+  };
   login = () => {
     const { dispatch } = this.props;
     dispatch({
@@ -11,9 +20,8 @@ class Head extends React.PureComponent {
     });
   };
   render() {
-    const { user, tabs, pathname } = this.props;
-    const loginType = user.get('loginType');
-    const avatarUrl = user.getIn(['profile', 'avatarUrl']);
+    const { user = { avatarUrl: '' }, tabs, pathname } = this.props;
+    const avatarUrl = user.avatarUrl;
     return (
       <div className="m-top">
         <div className="wrap f-cb">
@@ -29,8 +37,8 @@ class Head extends React.PureComponent {
               </li>
             ))}
           </ul>
-          <div className={classnames('log-b', { 'log-avatar': loginType === 1 })}>
-            {loginType === 1 ? (
+          <div className={classnames('log-b', { 'log-avatar': !!avatarUrl })}>
+            {!!avatarUrl ? (
               <React.Fragment>
                 <div className="user-avatar">
                   <img src={avatarUrl} alt="" />

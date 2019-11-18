@@ -1,4 +1,5 @@
 import qs from 'qs';
+// const baseUrl = 'http://wyy.server.localhost.com';
 const baseUrl = 'http://122.51.140.182:8888';
 export const get = (url, data, options = {}) => {
   url = `${baseUrl}${url}`;
@@ -8,7 +9,7 @@ export const get = (url, data, options = {}) => {
   return new Promise((resolve, reject) => {
     fetch(url, {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: options.credentials || 'same-origin',
+      credentials: options.credentials || 'include',
       method: 'GET',
       mode: options.mode || 'cors'
     })
@@ -18,6 +19,7 @@ export const get = (url, data, options = {}) => {
       .then(res => {
         if (res.code === 200) {
           resolve(res);
+          // reject(res)
         } else {
           reject('获取数据失败');
         }
@@ -34,7 +36,7 @@ export const post = (url, data, options = {}) => {
     fetch(url, {
       body: qs.stringify(data), // must match 'Content-Type' header
       cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: options.credentials || 'same-origin',
+      credentials: options.credentials || 'include',
       method: 'POST',
       mode: options.mode || 'cors'
     })

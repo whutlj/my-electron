@@ -62,11 +62,11 @@ export default {
     //   tls: 'empty',
     //   child_process: 'empty'
     // }
-    config.devServer.set('host', 'wyy.localhost.com').set('port', 8000);
+    config.devServer.set('host', 'wyy.localhost.com').set('port', 80);
   },
   devServer: {
     host: 'wyy.localhost.com',
-    port: 8000
+    port: 80
   },
   autoprefixer: false
   // manifest: {

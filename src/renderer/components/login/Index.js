@@ -45,17 +45,23 @@ class LoginModal extends React.PureComponent {
       password
     };
     try {
-      const res = await get('/login/cellphone', params);
+      const {
+        profile: { avatarUrl, nickname, userId }
+      } = await get('/login/cellphone', params);
       dispatch({
         type: 'user/setUser',
-        payload: res
+        payload: {
+          avatarUrl,
+          nickname,
+          userId
+        }
       });
       dispatch({
         type: 'user/setLoginVisible',
         payload: false
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       this.setState({
         errMsg: '用户名或密码错误'
       });

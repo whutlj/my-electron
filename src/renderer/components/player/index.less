@@ -1,0 +1,105 @@
+@import '~@/theme.less';
+
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: @primary-color;
+  z-index: 999;
+  height: 60px;
+  :global {
+    .play-box {
+      width: @content-width;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    .play-handle {
+      display: flex;
+      align-items: center;
+
+      .play-btn {
+        width: 36px;
+        height: 36px;
+        margin: 0 4px;
+        &.play {
+          .bg-set(url(../../assets/img/play.png));
+        }
+        &.stop {
+          .bg-set(url(../../assets/img/stop.png));
+        }
+      }
+      .prev {
+        width: 28px;
+        height: 28px;
+        .bg-set(url(../../assets/img/prev.png));
+      }
+      .next {
+        width: 28px;
+        height: 28px;
+        .bg-set(url(../../assets/img/next.png));
+      }
+    }
+    .play-avatar {
+      width: 45px;
+      height: 45px;
+      margin-left: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .play-bar {
+      align-self: flex-start;
+      margin-left: 10px;
+      .info {
+        height: 28px;
+        line-height: 28px;
+      }
+      .album {
+        color: #ffffff;
+      }
+      .artist {
+        margin-left: 4px;
+        color: #ff78c9;
+      }
+      .bar {
+        float: left;
+        position: relative;
+        margin-top: 10px;
+        width: 480px;
+        height: 8px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        .bar-track {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 10px;
+        }
+        .load-bar {
+          width: 200px;
+          background-color: #f00;
+        }
+        .cur-bar {
+          width: 100px;
+          background-color: #0f0;
+        }
+      }
+      .time {
+        width: 50px;
+        margin: 5px 0 0 10px;
+        color: #ffffff;
+        float: right;
+      }
+    }
+    .audio {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}

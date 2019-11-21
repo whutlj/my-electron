@@ -1,4 +1,4 @@
-import { get } from './fetch';
+import { get } from '@api/fetch';
 
 export async function fetchMusic(id) {
   try {

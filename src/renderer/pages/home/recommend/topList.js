@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './topList.less';
 import classnames from 'classnames';
+import { isSafari } from '@utils';
+import observer from '@utils/observer';
 
 const ImageMap = {
   bsPlaylist: 'http://p4.music.126.net/DrRIg6CrgDfVLEph9SNh7w==/18696095720518497.jpg?param=100y100',
@@ -30,6 +32,10 @@ class TopList extends React.PureComponent {
     e.currentTarget.className = '';
   };
   fetchMusic = id => {
+    if (isSafari()) {
+      console.log('播放音乐');
+      observer.$emit('playMusic');
+    }
     const { dispatch } = this.props;
     dispatch({
       type: 'play/fetchMusic',

@@ -1,6 +1,8 @@
 import { fromJS, Map } from 'immutable';
 import { fetchMusic, fetchMusicDetail } from '@api';
-import { storePlayHistory, getStoreFirst } from '@utils';
+import { storePlayHistory, getStoreFirst, isSafari } from '@utils';
+import observer from '@utils/observer';
+
 const defaultState = fromJS({
   music: getStoreFirst() || {
     id: '',

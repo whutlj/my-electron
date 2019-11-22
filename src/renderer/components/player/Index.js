@@ -3,6 +3,7 @@ import clasnames from 'classnames';
 import { connect } from 'dva';
 import { message } from 'antd';
 import { getAudioTime, isChrome, isFirefox, isSafari } from '@utils';
+import observer from '@utils/observer';
 import styles from './index.less';
 import memoizeOne from 'memoize-one';
 
@@ -64,12 +65,22 @@ class Player extends React.Component {
     return true;
   }
   componentDidMount() {
+    if (isSafari()) {
+      observer.$on('playMusic', () => {
+        if (this.audioEl.current) {
+          console.log('播放', this.audioEl.current);
+          // this.audioEl.current.load();
+          // this.audioEl.current.play();
+        }
+      });
+    }
     this.barWidth = this.barEl.offsetWidth;
     this.barEl = null;
     this.audioEl.current.addEventListener('error', this.audioErrorListener);
     this.audioEl.current.addEventListener('abort', this.audioAbortListener);
     this.audioEl.current.addEventListener('timeupdate', this.audioTimeupdateListener);
     this.audioEl.current.addEventListener('canplaythrough', this.audioCanplaythroughListener);
+    this.audioEl.current.addEventListener('canplay', this.audioCanplayListener);
     this.audioEl.current.addEventListener('waiting', this.audioWaitingListener);
     this.audioEl.current.addEventListener('progress', this.audioProgressListener);
     this.audioEl.current.addEventListener('loadstart', this.audioloadstartListener);
@@ -81,6 +92,7 @@ class Player extends React.Component {
     this.audioEl.current.removeEventListener('error', this.audioErrorListener);
     this.audioEl.current.removeEventListener('timeupdate', this.audioTimeupdateListener);
     this.audioEl.current.removeEventListener('canplaythrough', this.audioCanplaythroughListener);
+    this.audioEl.current.removeEventListener('canplay', this.audioCanplayListener);
     this.audioEl.current.removeEventListener('waiting', this.audioWaitingListener);
     this.audioEl.current.removeEventListener('progress', this.audioProgressListener);
     this.audioEl.current.removeEventListener('loadstart', this.audioloadstartListener);
@@ -93,17 +105,6 @@ class Player extends React.Component {
   //当媒体当前播放位置的帧完成加载时
   audioLoadeddataListener = () => {
     console.log('loadeddata');
-    const { isInit } = this.props;
-    let setting = {};
-    const { current } = this.audioEl;
-    const { playStatus } = this.state;
-    if (!isInit && current.paused && !current.error) {
-      if (isChrome() || isFirefox()) {
-        current.play();
-        setting.playStatus = !playStatus;
-      }
-      this.setState(setting);
-    }
   };
   // 音频播放错误
   audioErrorListener = error => {
@@ -145,6 +146,24 @@ class Player extends React.Component {
   audioCanplaythroughListener = () => {
     console.log('canplaythrough');
     this.setState({ audioWaiting: false });
+  };
+  // 兼容safari，因为canplayThrough是在最后触发
+  audioCanplayListener = () => {
+    console.log('canplay');
+    const { isInit } = this.props;
+    let setting = {};
+    const { current } = this.audioEl;
+    const { playStatus } = this.state;
+    console.log(isInit, current.paused, current.error);
+    if (!isInit && current.paused && !current.error) {
+      if (isChrome() || isFirefox()) {
+        console.log('bushi ')
+        current.play();
+        setting.playStatus = !playStatus;
+        this.setState(setting);
+      }
+    }
+    // this.audioEl.current.play()
   };
   // 需要加载数据
   audioWaitingListener = () => {
@@ -200,7 +219,7 @@ class Player extends React.Component {
     const currentTime = getAudioTime(audioCurrentTime);
     const { current } = this.audioEl;
     let isPlaying = false;
-    let isEnded = false
+    let isEnded = false;
     if (current) {
       isPlaying = !current.paused;
       isEnded = current.ended;
@@ -222,7 +241,7 @@ class Player extends React.Component {
         <div className="play-box">
           <div className="play-handle">
             <div className="prev" title="上一首" onClick={this.playHandle.bind(this, 'prev')}></div>
-            <div className={clasnames('play-btn', isPlaying && !isEnded ? 'play' : 'stop')} title="播发/暂停" onClick={this.playHandle.bind(this, 'play')}></div>
+            <div className={clasnames('play-btn', isPlaying && !isEnded ? 'play' : 'stop')} title="播放/暂停" onClick={this.playHandle.bind(this, 'play')}></div>
             <div className="next" title="下一首" onClick={this.playHandle.bind(this, 'next')}></div>
           </div>
           <div className="play-avatar">{curAlbumPicUrl ? <img src={curAlbumPicUrl} alt="" /> : null}</div>

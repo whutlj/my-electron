@@ -1,4 +1,4 @@
-import { get } from './fetch';
+import { get } from '@api/fetch';
 
 export async function fetchMusic(id) {
   try {
@@ -29,8 +29,7 @@ export async function fetchMusicDetail(musicIds) {
       const {
         name,
         al: { name: albumName, picUrl: albumPicUrl },
-        ar,
-        dt: duration
+        ar
       } = songs[0];
       const artistName = ar
         .map(artist => {
@@ -41,8 +40,7 @@ export async function fetchMusicDetail(musicIds) {
         name,
         albumName,
         albumPicUrl,
-        artistName,
-        duration
+        artistName
       };
     }
     return '';

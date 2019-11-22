@@ -1,0 +1,137 @@
+@import '~@/theme.less';
+
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: @primary-color;
+  z-index: 999;
+  height: 60px;
+  :global {
+    .play-box {
+      width: @content-width;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    .play-handle {
+      display: flex;
+      align-items: center;
+
+      .play-btn {
+        width: 36px;
+        height: 36px;
+        margin: 0 4px;
+        &.play {
+          .bg-set(url(../../assets/img/play.png));
+        }
+        &.stop {
+          .bg-set(url(../../assets/img/stop.png));
+        }
+      }
+      .prev {
+        width: 28px;
+        height: 28px;
+        .bg-set(url(../../assets/img/prev.png));
+      }
+      .next {
+        width: 28px;
+        height: 28px;
+        .bg-set(url(../../assets/img/next.png));
+      }
+    }
+    .play-avatar {
+      width: 45px;
+      height: 45px;
+      margin-left: 20px;
+      border: 1px solid #ffffff;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .play-bar {
+      align-self: flex-start;
+      margin-left: 10px;
+      .info {
+        height: 28px;
+        line-height: 28px;
+      }
+      .album {
+        color: #ffffff;
+      }
+      .artist {
+        margin-left: 4px;
+        color: #ff78c9;
+      }
+      .bar {
+        float: left;
+        margin-top: 10px;
+        width: 480px;
+        height: 8px;
+        position: relative;
+        border-radius: 10px;
+        background-color: #ffffff;
+        .bar-set {
+          border-radius: 10px;
+          overflow: hidden;
+        }
+        .bar-track {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 10px;
+        }
+        .load-bar {
+          width: 200px;
+          background-color: @buffer-bar-color;
+        }
+        .cur-bar {
+          width: 100px;
+          background-color: @bar-color;
+          cursor: pointer;
+        }
+        .bar-btn {
+          position: absolute;
+          right: -8px;
+          top: -4px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 2px solid @bar-color;
+          background-color: #ffffff;
+          cursor: pointer;
+          &.btn-loading {
+            i {
+              .bg-set(url(../../assets/img/loading.gif));
+            }
+          }
+          i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 10px;
+            height: 10px;
+            margin: auto auto;
+          }
+        }
+      }
+      .time {
+        width: 70px;
+        margin: 5px 0 0 15px;
+        color: #ffffff;
+        float: right;
+      }
+    }
+    .audio {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { get, post } from '@api/fetch.js';
 
 const defaultUser = {
@@ -77,12 +77,7 @@ export default {
   state: defaultState,
   reducers: {
     setUser(state, { payload }) {
-      const { avatarUrl, nickname, userId } = payload;
-      return state.set('user', {
-        avatarUrl,
-        nickname,
-        userId
-      });
+      return state.set('user', payload);
     },
     setLoginVisible(state, { payload }) {
       return state.set('loginVisible', payload);
@@ -90,12 +85,21 @@ export default {
   },
   effects: {
     *fetchLoginStatus(action, { call, put }) {
-      const { profile = {} } = yield call(get, '/login/status');
-      if (profile.userId) {
-      yield put({
-          type: 'setUser',
-          payload: profile
-        });
+      try {
+        const { profile = {} } = yield call(get, '/login/status');
+        if (profile.userId) {
+          const { avatarUrl, nickname, userId } = profile;
+          yield put({
+            type: 'setUser',
+            payload: Map({
+              avatarUrl,
+              nickname,
+              userId
+            })
+          });
+        }
+      } catch (error) {
+        console.error('获取用户登录状态失败', error);
       }
     }
   }

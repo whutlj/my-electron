@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'dva';
 import { get, post } from '@api/fetch.js';
 import { cacheImageFactory } from '@/utils';
+import classnames from 'classnames';
 import Swiper from 'swiper';
 import styles from './index.less';
+
 
 const preloadImg = cacheImageFactory();
 @connect()
@@ -39,7 +41,8 @@ class BannerComponent extends React.PureComponent {
   initSwiper() {
     const self = this;
     const len = self.state.banners.length;
-    new Swiper('.swiper-container', {
+    console.log('初始化', )
+    new Swiper(`.${styles['swiper-container']}`, {
       direction: 'horizontal', // 垂直切换选项
       loop: true, // 循环模式选项
       autoplay: {
@@ -76,7 +79,7 @@ class BannerComponent extends React.PureComponent {
     const { banners, bannerIndex } = this.state;
     return (
       <div
-        className="banner-container"
+        className={styles['banner-container']}
         style={
           banners.length > 0
             ? {
@@ -89,10 +92,10 @@ class BannerComponent extends React.PureComponent {
       >
         <div className="banner">
           <div className="banner-l">
-            <div className="swiper-container">
+            <div className={classnames(styles['swiper-container'], 'swiper-container')}>
               <div className="swiper-wrapper">
                 {banners.map(banner => (
-                  <div className="swiper-slide" key={banner.targetId}>
+                  <div className="swiper-slide" key={banner.imageUrl}>
                     <img src={banner.imageUrl} alt="" className="banner-image" />
                   </div>
                 ))}

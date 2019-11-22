@@ -1,15 +1,17 @@
 import React from 'react';
 import { get } from '@api/fetch.js';
-import styles from './index.less';
+import styles from './songList.less';
+import classnames from 'classnames';
 import { connect } from 'dva';
 
 @connect(({ playlist }) => ({
-  hotList: playlist.get('hot')
+  hotList: playlist.get('hot'),
+  playlists: playlist.get('playlists')
 }))
 class SongList extends React.PureComponent {
   componentDidMount() {
     this.fetchPlayListhHot();
-    this.playlist()
+    this.playlist();
   }
 
   fetchPlayListhHot = () => {
@@ -19,19 +21,19 @@ class SongList extends React.PureComponent {
     });
   };
   playlist = () => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'playlist/fetchlist'
-    })
-  }
+    });
+  };
   render() {
-    let { hotList } = this.props;
+    let { hotList, playlists } = this.props;
     let limit = 4;
     hotList = hotList.slice(0, limit);
     return (
-      <div className={styles['song-list']}>
-        <div className="title-item">
-          <a href="#" className="fl sl-fl">
+      <div className={classnames(styles['song-list'], 'home-list')}>
+        <div className="title-item index-img f-cb">
+          <a href="#" className="fl">
             热门推荐
           </a>
           <div className="sl-tab">
@@ -45,8 +47,19 @@ class SongList extends React.PureComponent {
             ))}
           </div>
         </div>
-        <ul className="sl-list">
-            <li className="sl-list-li"></li>
+        <ul className="sl-list f-cb">
+          {playlists.map(item => (
+            <li className="sl-list-li" key={item.id}>
+              <div className="sl-cover">
+                <img src={item.coverImgUrl} alt="热门歌单" />
+                <div className="sl-cover-mask coverall-img">
+                  <span className="icon-img p_1"></span>
+                  <span className="sl-pc">{item.playCount}万</span>
+                </div>
+              </div>
+              <div className="sl-name">{item.name}</div>
+            </li>
+          ))}
         </ul>
       </div>
     );

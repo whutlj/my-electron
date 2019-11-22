@@ -34,6 +34,20 @@ const routes = [
         "_title_default": "花音直播"
       },
       {
+        "path": "/home/recommend/topAlbum",
+        "exact": true,
+        "component": require('../home/recommend/topAlbum.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
+        "path": "/home/recommend/topList",
+        "exact": true,
+        "component": require('../home/recommend/topList.js').default,
+        "_title": "花音直播",
+        "_title_default": "花音直播"
+      },
+      {
         "path": "/",
         "exact": true,
         "component": require('../index.js').default,

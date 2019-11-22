@@ -20,18 +20,18 @@ class Head extends React.PureComponent {
     });
   };
   render() {
-    const { user = { avatarUrl: '' }, tabs, pathname } = this.props;
-    const avatarUrl = user.avatarUrl;
+    let { user, tabs, pathname } = this.props;
+    const avatarUrl = user.get('avatarUrl');
     return (
       <div className="m-top">
         <div className="wrap f-cb">
           <h1 className="logo" />
           <ul className="m-nav">
             {tabs.map(tab => (
-              <li key={tab.id}>
+              <li key={tab.get('id')}>
                 <span>
-                  <Link to={tab.pathname} className={pathname === tab.pathname ? 'a_act' : ''}>
-                    <em>{tab.label}</em>
+                  <Link to={tab.get('pathname')} className={pathname === tab.get('pathname') ? 'a_act' : ''}>
+                    <em>{tab.get('label')}</em>
                   </Link>
                 </span>
               </li>

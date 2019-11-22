@@ -2,7 +2,7 @@ import React from 'react';
 import clasnames from 'classnames';
 import { connect } from 'dva';
 import { message } from 'antd';
-import { getAudioTime } from '@utils';
+import { getAudioTime, isChrome, isFirefox, isSafari } from '@utils';
 import styles from './index.less';
 import memoizeOne from 'memoize-one';
 
@@ -56,7 +56,7 @@ class Player extends React.Component {
     return null;
   }
   shouldComponentUpdate(nextProps, nextStates) {
-    const keys = ['playStatus', 'audioCurrentTime', 'audioWaiting'];
+    const keys = ['playStatus', 'audioCurrentTime', 'audioWaiting', 'url'];
     for (let i = 0; i < keys.length; i++) {
       if (this.state[keys[i]] !== nextStates[keys[i]]) return true;
     }
@@ -93,13 +93,25 @@ class Player extends React.Component {
   //当媒体当前播放位置的帧完成加载时
   audioLoadeddataListener = () => {
     console.log('loadeddata');
+    const { isInit } = this.props;
+    let setting = {};
+    const { current } = this.audioEl;
+    const { playStatus } = this.state;
+    console.log(isInit, current.paused, current.error);
+    if (!isInit && current.paused && !current.error) {
+      if (isChrome() || isFirefox()) {
+        current.play();
+        setting.playStatus = !playStatus;
+      }
+    }
+    this.setState(setting);
   };
   // 音频播放错误
   audioErrorListener = error => {
     if (!this.state.curId) return;
     console.error('播放音乐失败', error.type);
     this.setState({
-      isPlaying: false,
+      playStatus: false,
       audioWaiting: false
     });
     message.error('播放失败，请重新尝试！');
@@ -126,22 +138,14 @@ class Player extends React.Component {
     }
     if (current.ended) {
       this.setState({
-        isPlaying: false
+        playStatus: !this.state.playStatus
       });
     }
   };
   // 当用户代理可以播放媒体时，将触发该事件，并估计已加载足够的数据来播放媒体直到其结束，而无需停止以进一步缓冲内容
   audioCanplaythroughListener = () => {
     console.log('canplaythrough');
-    const { isInit } = this.props;
-    let setting = { audioWaiting: false };
-    const { current } = this.audioEl;
-    const { playStatus } = this.state;
-    if (!isInit && current.paused && !current.error) {
-      current.play();
-      setting.playStatus = !playStatus;
-    }
-    this.setState(setting);
+    this.setState({ audioWaiting: false });
   };
   // 需要加载数据
   audioWaitingListener = () => {
@@ -190,14 +194,17 @@ class Player extends React.Component {
   render() {
     const { curAlbumName, curName, curAlbumPicUrl, curArtistName, audioCurrentTime, url, audioWaiting } = this.state;
     // 必须要等到当前新播放的歌曲头像加载完成才更换链接和路径
+    console.log('更新');
     let duration = 0;
     let curBarWidth = 0;
     let bufferBarWidth = 0;
     const currentTime = getAudioTime(audioCurrentTime);
     const { current } = this.audioEl;
     let isPlaying = false;
+    let isEnded = false
     if (current) {
       isPlaying = !current.paused;
+      isEnded = current.ended;
     }
     if (this.audioEl.current && this.audioEl.current.duration) {
       duration = Math.ceil(this.audioEl.current.duration);
@@ -216,7 +223,7 @@ class Player extends React.Component {
         <div className="play-box">
           <div className="play-handle">
             <div className="prev" title="上一首" onClick={this.playHandle.bind(this, 'prev')}></div>
-            <div className={clasnames('play-btn', isPlaying ? 'play' : 'stop')} title="播发/暂停" onClick={this.playHandle.bind(this, 'play')}></div>
+            <div className={clasnames('play-btn', isPlaying && !isEnded ? 'play' : 'stop')} title="播发/暂停" onClick={this.playHandle.bind(this, 'play')}></div>
             <div className="next" title="下一首" onClick={this.playHandle.bind(this, 'next')}></div>
           </div>
           <div className="play-avatar">{curAlbumPicUrl ? <img src={curAlbumPicUrl} alt="" /> : null}</div>

@@ -2,7 +2,7 @@ import { LOCAL_PLAY_HISTORY } from '@/config';
 export const isSupport = key => {
   return key in window;
 };
-
+const ua = window.navigator.userAgent.toLocaleLowerCase();
 /**预加载图片 */
 export const cacheImageFactory = () => {
   const savaImage = [];
@@ -77,4 +77,14 @@ export function getStoreFirst() {
     return playHistory[playHistory.length - 1];
   }
   return null;
+}
+
+export function isChrome() {
+  return ua.includes('chrome');
+}
+export function isFirefox() {
+  return ua.includes('firefox');
+}
+export function isSafari() {
+  return !ua.includes('chrome') || ua.includes('safari');
 }

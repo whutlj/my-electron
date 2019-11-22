@@ -59,7 +59,6 @@ class BannerComponent extends React.PureComponent {
         prevEl: '.swiper-button-prev'
       },
       on: {
-        init() {},
         slideChange: function() {
           let bannerIndex = 0;
           if (this.activeIndex === 0) {

@@ -97,14 +97,13 @@ class Player extends React.Component {
     let setting = {};
     const { current } = this.audioEl;
     const { playStatus } = this.state;
-    console.log(isInit, current.paused, current.error);
     if (!isInit && current.paused && !current.error) {
       if (isChrome() || isFirefox()) {
         current.play();
         setting.playStatus = !playStatus;
       }
+      this.setState(setting);
     }
-    this.setState(setting);
   };
   // 音频播放错误
   audioErrorListener = error => {

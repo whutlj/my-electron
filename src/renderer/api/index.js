@@ -29,7 +29,8 @@ export async function fetchMusicDetail(musicIds) {
       const {
         name,
         al: { name: albumName, picUrl: albumPicUrl },
-        ar
+        ar,
+        dt: duration
       } = songs[0];
       const artistName = ar
         .map(artist => {
@@ -40,7 +41,8 @@ export async function fetchMusicDetail(musicIds) {
         name,
         albumName,
         albumPicUrl,
-        artistName
+        artistName,
+        duration
       };
     }
     return '';

@@ -1,0 +1,1 @@
+export const LOCAL_PLAY_HISTORY = 'LOCAL_PLAY_HISTORY';

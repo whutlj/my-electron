@@ -1,15 +1,17 @@
 import { fromJS, Map } from 'immutable';
 import { fetchMusic, fetchMusicDetail } from '@api';
+import { storePlayHistory, getStoreFirst } from '@utils';
 const defaultState = fromJS({
-  music: {
+  music: getStoreFirst() || {
     id: '',
     url: '',
     name: '',
     albumName: '',
     albumPicUrl: '',
-    artistName: ''
+    artistName: '',
+    duration: ''
   },
-  playHistory: []
+  isInit: true
 });
 export default {
   namespace: 'play',
@@ -17,6 +19,9 @@ export default {
   reducers: {
     setMusic(state, { payload }) {
       return state.set('music', payload);
+    },
+    setInit(state, { payload }) {
+      return state.set('isInit', payload);
     }
   },
   effects: {
@@ -25,12 +30,22 @@ export default {
       const currentMusic = yield select(state => state.play.getIn(['music', 'id']));
       const { id } = payload;
       if (currentMusic && currentMusic === id) return;
+      const isInit = yield select(state => state.play.get('isInit'));
+      if (isInit) {
+        yield put({
+          type: 'setInit',
+          payload: false
+        });
+      }
       // 还需要并发获取歌曲详情，所以需要
       const { music, detail } = yield all({ music: call(fetchMusic, id), detail: call(fetchMusicDetail, id) });
       detail.albumPicUrl = `${detail.albumPicUrl}?param=45y45`;
+      const res = Object.assign(music, detail);
+      // 播放记录储存起来
+      storePlayHistory(res);
       yield put({
         type: 'setMusic',
-        payload: Map(Object.assign(music, detail))
+        payload: Map(res)
       });
     }
   }

@@ -33,6 +33,7 @@ class Player extends React.Component {
     vm = this;
     this.audioEl = React.createRef();
     this.barEl = null;
+    this.isManual = false; // 手动点击不改变之前播放状态
   }
   static getDerivedStateFromProps(props, state) {
     const { music } = props;
@@ -67,20 +68,17 @@ class Player extends React.Component {
     return true;
   }
   componentDidMount() {
-    this.audioEl.current.load();
-    this.audioEl.current.play();
-
-    // if (isSafari()) {
-    //   observer.$on('playMusic', () => {
-    //     if (this.audioEl.current && !safariLoaded) {
-    //       // safari必须要load一次
-    //       console.log('load==========');
-    //       setSafariLoaded(true);
-    //       this.audioEl.current.load();
-    //       this.audioEl.current.play();
-    //     }
-    //   });
-    // }
+    if (isSafari()) {
+      observer.$on('playMusic', () => {
+        if (this.audioEl.current && !safariLoaded) {
+          // safari必须要load一次
+          console.log('load==========');
+          setSafariLoaded(true);
+          this.audioEl.current.load();
+          this.audioEl.current.play();
+        }
+      });
+    }
     this.barWidth = this.barEl.offsetWidth;
     this.barEl = null;
     this.audioEl.current.addEventListener('error', this.audioErrorListener);
@@ -104,6 +102,12 @@ class Player extends React.Component {
     this.audioEl.current.removeEventListener('progress', this.audioProgressListener);
     this.audioEl.current.removeEventListener('loadstart', this.audioloadstartListener);
     this.audioEl.current.removeEventListener('loadeddata', this.audioLoadeddataListener);
+  }
+  componentDidUpdate(preProps, preStates) {
+    if (preStates.url !== this.state.url) {
+      console.log('切换之前状态=====');
+      this.isManual = false;
+    }
   }
   // 当浏览器开始加载资源
   audioloadstartListener = () => {
@@ -156,12 +160,13 @@ class Player extends React.Component {
   // 当用户代理可以播放媒体时，将触发该事件，并估计已加载足够的数据来播放媒体直到其结束，而无需停止以进一步缓冲内容
   audioCanplaythroughListener = () => {
     console.log('canplaythrough');
+
     const { current } = this.audioEl;
     const { isInit } = this.props;
     let setting = { audioWaiting: false };
     const { playStatus } = this.state;
     console.log(isInit, current.paused, current.error);
-    if (!isInit && current.paused && !current.error) {
+    if (!isInit && current.paused && !current.error && !this.isManual) {
       // if (isChrome() || isFirefox()) {
       current.play();
       setting.playStatus = !playStatus;
@@ -214,6 +219,7 @@ class Player extends React.Component {
     const { left } = currentTarget.getBoundingClientRect();
     let diff = clientX - left;
     if (diff < 0) diff = 0;
+    this.isManual = true;
     this.audioEl.current.currentTime = (diff / this.barWidth) * this.audioEl.current.duration;
   };
   toggleLyrics = () => {

@@ -86,5 +86,5 @@ export function isFirefox() {
   return ua.includes('firefox');
 }
 export function isSafari() {
-  return !ua.includes('chrome') || ua.includes('safari');
+  return !ua.includes('chrome') && ua.includes('safari');
 }

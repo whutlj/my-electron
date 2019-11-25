@@ -6,8 +6,7 @@ import classnames from 'classnames';
 import Swiper from 'swiper';
 import styles from './index.less';
 
-
-const preloadImg = cacheImageFactory();
+let preloadImg = cacheImageFactory();
 @connect()
 class BannerComponent extends React.PureComponent {
   state = {
@@ -38,10 +37,11 @@ class BannerComponent extends React.PureComponent {
       console.error('fetch banner error', error);
     }
   };
+  componentWillUnmount() {}
   initSwiper() {
     const self = this;
     const len = self.state.banners.length;
-    console.log('初始化', )
+    console.log('初始化');
     new Swiper(`.${styles['swiper-container']}`, {
       direction: 'horizontal', // 垂直切换选项
       loop: true, // 循环模式选项
@@ -54,6 +54,7 @@ class BannerComponent extends React.PureComponent {
         el: '.swiper-pagination'
       },
       // 如果需要前进后退按钮
+
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'

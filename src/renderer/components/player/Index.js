@@ -6,10 +6,10 @@ import { getAudioTime, isChrome, isFirefox, isSafari } from '@utils';
 import observer from '@utils/observer';
 import styles from './index.less';
 import memoizeOne from 'memoize-one';
+import { MEDIA_ERROR, safariLoaded, setSafariLoaded } from '@/config';
 
 let vm = null;
 const getTotalTime = memoizeOne(getAudioTime);
-
 @connect(({ play }) => ({
   music: play.get('music'),
   isInit: play.get('isInit')
@@ -26,7 +26,9 @@ class Player extends React.Component {
       url: '',
       audioCurrentTime: 0,
       audioWaiting: false,
-      playStatus: false
+      playStatus: false,
+      progress: false,
+      lyricVisible: true
     };
     vm = this;
     this.audioEl = React.createRef();
@@ -57,7 +59,7 @@ class Player extends React.Component {
     return null;
   }
   shouldComponentUpdate(nextProps, nextStates) {
-    const keys = ['playStatus', 'audioCurrentTime', 'audioWaiting', 'url'];
+    const keys = ['playStatus', 'lyricVisible', 'progress', 'audioCurrentTime', 'audioWaiting', 'url'];
     for (let i = 0; i < keys.length; i++) {
       if (this.state[keys[i]] !== nextStates[keys[i]]) return true;
     }
@@ -65,15 +67,20 @@ class Player extends React.Component {
     return true;
   }
   componentDidMount() {
-    if (isSafari()) {
-      observer.$on('playMusic', () => {
-        if (this.audioEl.current) {
-          console.log('播放', this.audioEl.current);
-          // this.audioEl.current.load();
-          // this.audioEl.current.play();
-        }
-      });
-    }
+    this.audioEl.current.load();
+    this.audioEl.current.play();
+
+    // if (isSafari()) {
+    //   observer.$on('playMusic', () => {
+    //     if (this.audioEl.current && !safariLoaded) {
+    //       // safari必须要load一次
+    //       console.log('load==========');
+    //       setSafariLoaded(true);
+    //       this.audioEl.current.load();
+    //       this.audioEl.current.play();
+    //     }
+    //   });
+    // }
     this.barWidth = this.barEl.offsetWidth;
     this.barEl = null;
     this.audioEl.current.addEventListener('error', this.audioErrorListener);
@@ -87,7 +94,7 @@ class Player extends React.Component {
     this.audioEl.current.addEventListener('loadeddata', this.audioLoadeddataListener);
   }
   componentWillUnmount() {
-    vm = null; // 解除
+    // vm = null; // 解除
     this.audioEl.current.removeEventListener('abort', this.audioAbortListener);
     this.audioEl.current.removeEventListener('error', this.audioErrorListener);
     this.audioEl.current.removeEventListener('timeupdate', this.audioTimeupdateListener);
@@ -107,14 +114,14 @@ class Player extends React.Component {
     console.log('loadeddata');
   };
   // 音频播放错误
-  audioErrorListener = error => {
-    if (!this.state.curId) return;
-    console.error('播放音乐失败', error.type);
+  audioErrorListener = event => {
+    if (!this.state.curId && this.props.isInit) return;
     this.setState({
       playStatus: false,
       audioWaiting: false
     });
-    message.error('播放失败，请重新尝试！');
+    const { code } = event.currentTarget.error;
+    message.error(MEDIA_ERROR[code] || '播放失败，请重新尝试！');
   };
   // 切换音乐时会触发
   audioAbortListener = event => {
@@ -124,7 +131,11 @@ class Player extends React.Component {
   };
   // 浏览器加载资源
   audioProgressListener = event => {
-    console.log('progress');
+    if (isSafari()) {
+      this.setState({
+        progress: !this.state.progress
+      });
+    }
   };
   // currentTime改变的事件
   audioTimeupdateListener = event => {
@@ -145,25 +156,22 @@ class Player extends React.Component {
   // 当用户代理可以播放媒体时，将触发该事件，并估计已加载足够的数据来播放媒体直到其结束，而无需停止以进一步缓冲内容
   audioCanplaythroughListener = () => {
     console.log('canplaythrough');
-    this.setState({ audioWaiting: false });
+    const { current } = this.audioEl;
+    const { isInit } = this.props;
+    let setting = { audioWaiting: false };
+    const { playStatus } = this.state;
+    console.log(isInit, current.paused, current.error);
+    if (!isInit && current.paused && !current.error) {
+      // if (isChrome() || isFirefox()) {
+      current.play();
+      setting.playStatus = !playStatus;
+    }
+    this.setState(setting);
+    // }
   };
   // 兼容safari，因为canplayThrough是在最后触发
   audioCanplayListener = () => {
     console.log('canplay');
-    const { isInit } = this.props;
-    let setting = {};
-    const { current } = this.audioEl;
-    const { playStatus } = this.state;
-    console.log(isInit, current.paused, current.error);
-    if (!isInit && current.paused && !current.error) {
-      if (isChrome() || isFirefox()) {
-        console.log('bushi ')
-        current.play();
-        setting.playStatus = !playStatus;
-        this.setState(setting);
-      }
-    }
-    // this.audioEl.current.play()
   };
   // 需要加载数据
   audioWaitingListener = () => {
@@ -208,11 +216,15 @@ class Player extends React.Component {
     if (diff < 0) diff = 0;
     this.audioEl.current.currentTime = (diff / this.barWidth) * this.audioEl.current.duration;
   };
+  toggleLyrics = () => {
+    this.setState({
+      lyricVisible: !this.state.lyricVisible
+    });
+  };
 
   render() {
-    const { curAlbumName, curName, curAlbumPicUrl, curArtistName, audioCurrentTime, url, audioWaiting } = this.state;
+    const { curAlbumName, lyricVisible, curName, curAlbumPicUrl, curArtistName, audioCurrentTime, url, audioWaiting } = this.state;
     // 必须要等到当前新播放的歌曲头像加载完成才更换链接和路径
-    console.log('更新');
     let duration = 0;
     let curBarWidth = 0;
     let bufferBarWidth = 0;
@@ -266,9 +278,12 @@ class Player extends React.Component {
               </div>
             </div>
           </div>
-          <div className="play-set"></div>
+          <div className="play-set" onClick={this.toggleLyrics}>
+            歌词
+          </div>
+          {lyricVisible ? <div className="lyrics-wrapper">我是歌词</div> : null}
         </div>
-        <audio src={url} style={{ display: 'none' }} ref={this.audioEl} controls></audio>
+        <audio src={url} style={{ display: 'none' }} ref={this.audioEl}></audio>
         {/* <audio src={url} className="audio" controls></audio> */}
       </div>
     );

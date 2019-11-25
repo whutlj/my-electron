@@ -32,10 +32,6 @@ class TopList extends React.PureComponent {
     e.currentTarget.className = '';
   };
   fetchMusic = id => {
-    if (isSafari()) {
-      console.log('播放音乐');
-      observer.$emit('playMusic');
-    }
     const { dispatch } = this.props;
     dispatch({
       type: 'play/fetchMusic',

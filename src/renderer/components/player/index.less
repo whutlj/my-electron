@@ -10,6 +10,7 @@
   height: 60px;
   :global {
     .play-box {
+      position: relative;
       width: @content-width;
       height: 100%;
       margin: 0 auto;
@@ -132,6 +133,23 @@
       position: absolute;
       right: 0;
       top: 0;
+    }
+    .play-set {
+      color: #ffffff;
+      margin-top: 32px;
+      margin-left: 5px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+    .lyrics-wrapper {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 354px;
+      height: 240px;
+      background-color: @primary-color;
+      overflow: hidden;
+      color: #ffffff;
     }
   }
 }

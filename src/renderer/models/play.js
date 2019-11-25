@@ -2,7 +2,9 @@ import { fromJS, Map } from 'immutable';
 import { fetchMusic, fetchMusicDetail } from '@api';
 import { storePlayHistory, getStoreFirst, isSafari } from '@utils';
 import observer from '@utils/observer';
+import { safariLoaded } from '@/config';
 
+const safari = isSafari();
 const defaultState = fromJS({
   music: getStoreFirst() || {
     id: '',
@@ -13,7 +15,7 @@ const defaultState = fromJS({
     artistName: '',
     duration: ''
   },
-  isInit: true
+  isInit: true // 页面第一次加载时不自动播放，只有当请求过新音乐时，才自动播放
 });
 export default {
   namespace: 'play',
@@ -38,6 +40,10 @@ export default {
           type: 'setInit',
           payload: false
         });
+      }
+      if (!safariLoaded && safari) {
+        console.log('333333')
+        observer.$emit('playMusic', { isInit: false });
       }
       // 还需要并发获取歌曲详情，所以需要
       const { music, detail } = yield all({ music: call(fetchMusic, id), detail: call(fetchMusicDetail, id) });

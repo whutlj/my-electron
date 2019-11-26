@@ -1,5 +1,6 @@
 import { fromJS, Map } from 'immutable';
 import { fetchMusic, fetchMusicDetail } from '@api';
+import { get } from '@api/fetch';
 import { storePlayHistory, getStoreFirst, isSafari } from '@utils';
 import observer from '@utils/observer';
 import { safariLoaded } from '@/config';
@@ -15,7 +16,12 @@ const defaultState = fromJS({
     artistName: '',
     duration: ''
   },
-  isInit: true // 页面第一次加载时不自动播放，只有当请求过新音乐时，才自动播放
+  isInit: true, // 页面第一次加载时不自动播放，只有当请求过新音乐时，才自动播放
+  lyricInfo: {
+    id: '',
+    lyric: ''
+  },
+  lyricVisible: false
 });
 export default {
   namespace: 'play',
@@ -26,12 +32,19 @@ export default {
     },
     setInit(state, { payload }) {
       return state.set('isInit', payload);
+    },
+    setLyric(state, { payload }) {
+      return state.set('lyricInfo', payload);
+    },
+    setLyricVisible(state, { payload }) {
+      return state.set('lyricVisible', payload);
     }
   },
   effects: {
-    *fetchMusic({ payload }, { call, put, select, all }) {
+    *fetchMusic({ payload }, { call, put, select, all, fork }) {
       if (!payload || !payload.id) return;
       const currentMusic = yield select(state => state.play.getIn(['music', 'id']));
+      const lyricVisible = yield select(state => state.play.get('lyricVisible'));
       const { id } = payload;
       if (currentMusic && currentMusic === id) return;
       const isInit = yield select(state => state.play.get('isInit'));
@@ -42,8 +55,14 @@ export default {
         });
       }
       if (!safariLoaded && safari) {
-        console.log('333333')
         observer.$emit('playMusic', { isInit: false });
+      }
+      // 歌词窗口是否打开
+      if (lyricVisible) {
+        yield fork(put, {
+          type: 'fetchLyric',
+          payload: { id }
+        });
       }
       // 还需要并发获取歌曲详情，所以需要
       const { music, detail } = yield all({ music: call(fetchMusic, id), detail: call(fetchMusicDetail, id) });
@@ -55,6 +74,32 @@ export default {
         type: 'setMusic',
         payload: Map(res)
       });
+    },
+    *fetchLyric({ payload }, { call, put, select, fork }) {
+      try {
+        const { id } = payload;
+        const currentId = yield select(state => state.play.getIn(['lyricInfo', 'id']));
+        if (id === currentId) return;
+        const {
+          lrc: { lyric }
+        } = yield call(get, '/lyric', { id });
+        yield put({
+          type: 'setLyric',
+          payload: Map({
+            id,
+            lyric
+          })
+        });
+      } catch (error) {
+        console.log('获取歌词失败', error);
+        yield put({
+          type: 'setLyric',
+          payload: Map({
+            id: payload.id,
+            lyric: ''
+          })
+        });
+      }
     }
   }
 };

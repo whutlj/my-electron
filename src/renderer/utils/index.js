@@ -1,4 +1,5 @@
 import { LOCAL_PLAY_HISTORY } from '@/config';
+import { func } from 'prop-types';
 export const isSupport = key => {
   return key in window;
 };
@@ -87,4 +88,47 @@ export function isFirefox() {
 }
 export function isSafari() {
   return !ua.includes('chrome') && ua.includes('safari');
+}
+
+export function replaceSep(str) {
+  return str.replace(/[\.\:]/g, '');
+}
+
+export function isValidTime(str) {
+  return /\d+\:\d+\.\d/.test(str);
+}
+
+export function throttle(fn, delay) {
+  var now, lastExec, timer, context, args; //eslint-disable-line
+
+  var execute = function() {
+    fn.apply(context, args);
+    lastExec = now;
+  };
+
+  return function(event) {
+    event.persist()
+    context = this;
+    args = arguments;
+
+    now = Date.now();
+
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+
+    if (lastExec) {
+      var diff = delay - (now - lastExec);
+      if (diff < 0) {
+        execute();
+      } else {
+        timer = setTimeout(() => {
+          execute();
+        }, diff);
+      }
+    } else {
+      execute();
+    }
+  };
 }

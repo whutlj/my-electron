@@ -7,12 +7,14 @@ import observer from '@utils/observer';
 import styles from './index.less';
 import memoizeOne from 'memoize-one';
 import { MEDIA_ERROR, safariLoaded, setSafariLoaded } from '@/config';
+import Lyrics from './lyrics';
 
 let vm = null;
 const getTotalTime = memoizeOne(getAudioTime);
 @connect(({ play }) => ({
   music: play.get('music'),
-  isInit: play.get('isInit')
+  isInit: play.get('isInit'),
+  lyricVisible: play.get('lyricVisible')
 }))
 class Player extends React.Component {
   constructor(props) {
@@ -27,8 +29,7 @@ class Player extends React.Component {
       audioCurrentTime: 0,
       audioWaiting: false,
       playStatus: false,
-      progress: false,
-      lyricVisible: true
+      progress: false
     };
     vm = this;
     this.audioEl = React.createRef();
@@ -60,7 +61,7 @@ class Player extends React.Component {
     return null;
   }
   shouldComponentUpdate(nextProps, nextStates) {
-    const keys = ['playStatus', 'lyricVisible', 'progress', 'audioCurrentTime', 'audioWaiting', 'url'];
+    const keys = ['playStatus', 'progress', 'audioCurrentTime', 'audioWaiting', 'url'];
     for (let i = 0; i < keys.length; i++) {
       if (this.state[keys[i]] !== nextStates[keys[i]]) return true;
     }
@@ -223,9 +224,24 @@ class Player extends React.Component {
     this.audioEl.current.currentTime = (diff / this.barWidth) * this.audioEl.current.duration;
   };
   toggleLyrics = () => {
-    this.setState({
-      lyricVisible: !this.state.lyricVisible
-    });
+    const { curId } = this.state;
+    const { dispatch, lyricVisible } = this.props;
+    if (!lyricVisible) {
+      // 关闭的
+      dispatch({
+        type: 'play/fetchLyric',
+        payload: { id: curId, visible: true }
+      });
+      dispatch({
+        type: 'play/setLyricVisible',
+        payload: true
+      });
+    } else {
+      dispatch({
+        type: 'play/setLyricVisible',
+        payload: false
+      });
+    }
   };
 
   render() {
@@ -287,7 +303,7 @@ class Player extends React.Component {
           <div className="play-set" onClick={this.toggleLyrics}>
             歌词
           </div>
-          {lyricVisible ? <div className="lyrics-wrapper">我是歌词</div> : null}
+          <Lyrics currentTime={currentTime}></Lyrics>
         </div>
         <audio src={url} style={{ display: 'none' }} ref={this.audioEl}></audio>
         {/* <audio src={url} className="audio" controls></audio> */}

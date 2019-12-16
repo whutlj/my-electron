@@ -107,7 +107,8 @@ export function throttle(fn, delay) {
   };
 
   return function(event) {
-    event.persist()
+    // 这是
+    event.persist();
     context = this;
     args = arguments;
 

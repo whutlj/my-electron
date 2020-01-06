@@ -13,6 +13,11 @@ plugins.init({
   validKeys: ['patchRoutes','render','rootContainer','modifyRouteProps','onRouteChange','modifyInitialProps','initialProps','dva',],
 });
 plugins.use(require('../../../../node_modules/umi-plugin-dva/lib/runtime'));
+plugins.use(require('@/app'));
+
+
+    console.log('THIS IS UMI PLUGIN RENDER AHEAD');
+  
 
 const app = require('@tmp/dva')._onCreate();
 window.g_app = app;
@@ -110,6 +115,10 @@ export { ReactDOMServer };
 export default __IS_BROWSER ? null : serverRender;
 
 require('../../global.less');
+
+
+    console.log('THIS IS UMI PLUGIN RENDER')
+  
 
 // hot module replacement
 if (__IS_BROWSER && module.hot) {

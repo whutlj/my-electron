@@ -13,8 +13,8 @@ const defaultState = fromJS({
     },
     {
       label: '主播电台',
-      id: 'other',
-      pathname: '/'
+      id: 'drag',
+      pathname: '/drag'
     }
   ]
 });

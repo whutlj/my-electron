@@ -13,56 +13,34 @@ const routes = [
     "component": require('../../layouts/index.js').default,
     "routes": [
       {
-        "path": "/drag",
-        "exact": true,
-        "component": require('../drag/index.js').default,
-        "_title": "花音直播",
-        "_title_default": "花音直播"
-      },
-      {
         "path": "/home",
-        "exact": true,
         "component": require('../home/index.js').default,
-        "_title": "花音直播",
-        "_title_default": "花音直播"
-      },
-      {
-        "path": "/home/recommend/songList",
+        "title": "主页33",
         "exact": true,
-        "component": require('../home/recommend/songList.js').default,
-        "_title": "花音直播",
-        "_title_default": "花音直播"
-      },
-      {
-        "path": "/home/recommend/topAlbum",
-        "exact": true,
-        "component": require('../home/recommend/topAlbum.js').default,
-        "_title": "花音直播",
-        "_title_default": "花音直播"
-      },
-      {
-        "path": "/home/recommend/topList",
-        "exact": true,
-        "component": require('../home/recommend/topList.js').default,
-        "_title": "花音直播",
-        "_title_default": "花音直播"
-      },
-      {
-        "path": "/",
-        "exact": true,
-        "component": require('../index.js').default,
-        "_title": "花音直播",
+        "Routes": [require('./TitleWrapper.jsx').default],
+        "_title": "主页33",
         "_title_default": "花音直播"
       },
       {
         "path": "/playlist",
-        "exact": true,
         "component": require('../playlist/index.js').default,
-        "_title": "花音直播",
+        "title": "播放列表",
+        "exact": true,
+        "Routes": [require('./TitleWrapper.jsx').default],
+        "_title": "播放列表",
         "_title_default": "花音直播"
       },
       {
-        "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false }),
+        "path": "/drag",
+        "component": require('../drag/index.js').default,
+        "title": "测试",
+        "exact": true,
+        "Routes": [require('./TitleWrapper.jsx').default],
+        "_title": "测试",
+        "_title_default": "花音直播"
+      },
+      {
+        "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: true }),
         "_title": "花音直播",
         "_title_default": "花音直播"
       }
@@ -71,7 +49,7 @@ const routes = [
     "_title_default": "花音直播"
   },
   {
-    "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: false }),
+    "component": () => React.createElement(require('/Users/lijie/Documents/workspace/study/my-electron/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'pages', hasRoutesInConfig: true }),
     "_title": "花音直播",
     "_title_default": "花音直播"
   }

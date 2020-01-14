@@ -13,12 +13,12 @@ const routes = [
     "component": require('../../layouts/index.js').default,
     "routes": [
       {
-        "path": "/home",
+        "path": "/",
         "component": require('../home/index.js').default,
-        "title": "主页33",
+        "title": "首页",
         "exact": true,
         "Routes": [require('./TitleWrapper.jsx').default],
-        "_title": "主页33",
+        "_title": "首页",
         "_title_default": "花音直播"
       },
       {
@@ -37,6 +37,15 @@ const routes = [
         "exact": true,
         "Routes": [require('./TitleWrapper.jsx').default],
         "_title": "测试",
+        "_title_default": "花音直播"
+      },
+      {
+        "path": "/hooks",
+        "component": require('../hooks/index.js').default,
+        "title": "钩子组件",
+        "exact": true,
+        "Routes": [require('./TitleWrapper.jsx').default],
+        "_title": "钩子组件",
         "_title_default": "花音直播"
       },
       {

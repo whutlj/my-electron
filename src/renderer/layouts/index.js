@@ -22,7 +22,7 @@ class BasicLayout extends React.PureComponent {
         <Head pathname={pathname} {...this.props} />
         <LoginModal {...this.props} visible={loginVisible} />
         {children}
-        <Player></Player>
+        {/* <Player></Player> */}
       </div>
     );
   }

@@ -18,13 +18,13 @@ export default {
         dynamicImport: false,
         title: '花音直播'
       }
-    ],
-    [
-      './plugin/new.js',
-      {
-        watchDir: [resolvePath('router/index.js'), resolvePath('plugin/new.js')]
-      }
     ]
+    // [
+    //   './plugin/new.js',
+    //   {
+    //     watchDir: [resolvePath('router/index.js'), resolvePath('plugin/new.js')]
+    //   }
+    // ]
   ],
   alias: {
     '@': resolvePath(''),
@@ -48,13 +48,13 @@ export default {
     //   const requireAbsolute = `require('${orininalPath}')`;
     //   isExternal = isDev ? requireAbsolute : `require('${request}')`;
     // }
-    const CDNJs = ['immutable'];
-    const CDNMap = {
-      immutable: 'Immutable'
-    };
-    if (CDNJs.includes(request)) {
-      isExternal = CDNMap[request];
-    }
+    // const CDNJs = ['immutable'];
+    // const CDNMap = {
+    //   immutable: 'Immutable'
+    // };
+    // if (CDNJs.includes(request)) {
+    //   isExternal = CDNMap[request];
+    // }
     callback(null, isExternal);
   },
   chainWebpack(config, { webpack }) {
@@ -68,7 +68,7 @@ export default {
     //   tls: 'empty',
     //   child_process: 'empty'
     // }
-    config.devServer.set('host', 'wyy.localhost.com').set('port', 80);
+    // config.devServer.set('host', 'wyy.localhost.com').set('port', 80);
   },
   devServer: {
     host: 'wyy.localhost.com',

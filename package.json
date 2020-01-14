@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start:main": "electron ./src/main/index",
-    "start:render": "APP_ROOT=src/renderer BROWSER=none ESLINT=none umi dev",
+    "start:render": "APP_ROOT=src/renderer BROWSER=none umi dev",
     "build:render": "APP_ROOT=src/renderer ESLINT=none umi build",
     "build:main": "webpack --config ./webpack.config.js",
     "build": "yarn build:render && yarn build:main",
@@ -50,6 +50,7 @@
     "electron-is": "^3.0.0",
     "electron-log": "^3.0.6",
     "electron-rebuild": "^1.8.5",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "file-loader": "^4.0.0",
     "jest": "^24.9.0",
     "qs": "^6.7.0",
@@ -63,6 +64,8 @@
     "immutable": "^4.0.0-rc.12",
     "js-cookie": "^2.2.1",
     "memoize-one": "^5.1.1",
+    "react-fast-compare": "^2.0.4",
+    "react-use": "^13.14.3",
     "swiper": "^5.2.0"
   }
 }

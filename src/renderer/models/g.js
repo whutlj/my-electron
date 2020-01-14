@@ -4,7 +4,7 @@ const defaultState = fromJS({
     {
       label: '个性推荐',
       id: 'find',
-      pathname: '/home'
+      pathname: '/'
     },
     {
       label: '歌单',
@@ -15,6 +15,11 @@ const defaultState = fromJS({
       label: '主播电台',
       id: 'drag',
       pathname: '/drag'
+    },
+    {
+      label: 'react hooks',
+      id: 'hooks',
+      pathname: '/hooks'
     }
   ]
 });

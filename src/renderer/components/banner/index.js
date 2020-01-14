@@ -37,12 +37,13 @@ class BannerComponent extends React.PureComponent {
       console.error('fetch banner error', error);
     }
   };
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.swiperInstance.destroy();
+  }
   initSwiper() {
     const self = this;
     const len = self.state.banners.length;
-    console.log('初始化');
-    new Swiper(`.${styles['swiper-container']}`, {
+    this.swiperInstance = new Swiper(`.${styles['swiper-container']}`, {
       direction: 'horizontal', // 垂直切换选项
       loop: true, // 循环模式选项
       autoplay: {

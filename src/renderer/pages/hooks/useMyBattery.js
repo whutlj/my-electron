@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import isEqual from 'react-fast-compare';
+import { on, off } from '@utils/event';
 
 const nav = typeof navigator === 'object' ? navigator : undefined;
 const isSupport = nav && typeof nav.getBattery === 'function';
 
-const isSupport = typeof window.navigator.getBattery;
 function useBatteryMock() {
   return { isSupport: false };
 }
@@ -25,16 +25,21 @@ function useBattery() {
         dischargingTime, // 距离用完电要多久
         level // 电量放大等级
       };
+      // 必须判断是否相等
       !isEqual(state, newState) && setState(newState);
     }
     // 异步的，所以必须保证没有卸载
     nav.getBattery().then(bat => {
       if (!isMounted) return;
       battery = bat;
+      on(battery, 'chargingchange', handleChange);
       handleChange();
     });
     return () => {
       isMounted = false;
+      if (battery) {
+        off(battery, 'chargingchange', handleChange);
+      }
     };
   });
   return state;

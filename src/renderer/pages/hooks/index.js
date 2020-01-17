@@ -5,6 +5,7 @@ import useUpdateEffect from './useUpdateEffect';
 import useMyCss from './useMyCss';
 import useMyScroll from './useMyScroll';
 import useMyWindowSize from './useMyWindowSize';
+import useMyBattery from './useMyBattery';
 import memoizeOne from 'memoize-one';
 import Styles from './index.less';
 function createC() {
@@ -142,6 +143,7 @@ export default React.memo(props => {
   const myScrollRef = useRef(null);
   const { x, y } = useScroll(scrollRef);
   const { x: myX, y: myY } = useScroll(myScrollRef);
+  const batteryState = useMyBattery();
   const s1 = useCss({
     color: '#f00'
   });
@@ -318,10 +320,21 @@ export default React.memo(props => {
       <div onClick={instanceHandle}>子组件ref测试</div>
       <div onClick={memorizedCb.bind(null, 1222)}>memorizedCb</div>
       <div onClick={() => setA(10)}>memorizedSum</div>
-      {/* {memorizedComp} */}
-      {list.map((item, index) => {
-        return <p key={index}>{item.label}</p>;
-      })}
+      <div className="">
+        <p>这里是电池信息</p>
+        <div>
+          {batteryState.isSupport ? (
+            <div>
+              <p>正在充电：{batteryState.charging ? '是' : '否'}</p>
+              <p>距离充满时间：{batteryState.chargingTime}</p>
+              <p>距离电量用完时间：{batteryState.dischargingTime}</p>
+              <p>电量等级：{batteryState.level}</p>
+            </div>
+          ) : (
+            '不支持'
+          )}
+        </div>
+      </div>
     </div>
   );
 });
